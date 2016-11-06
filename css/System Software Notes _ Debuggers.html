@@ -1,0 +1,123 @@
+
+<!-- saved from url=(0057)http://www.tezu.ernet.in/~utpal/course_mat/ss_debugr.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title> System Software Notes : Debuggers </title>
+<style type="text/css"></style></head>
+
+<body cz-shortcut-listen="true">
+<h2> Debuggers </h2>
+
+<h3> Introduction </h3>
+
+<i>Debugging</i> means locating (and then removing) <i>bugs</i>, i.e.,
+faults, in programs. In the entire process of program development errors may
+occur at various stages and efforts to detect and remove them may also be
+made at various stages. However, the word debugging is usually in context of
+errors that manifest while running the program during testing or during
+actual use. The most common steps taken in debugging are to examine the
+flow of control during execution of the program, examine values of variables
+at different points in the program, examine the values of parameters passed
+to functions and values returned by the functions, examine the function call
+sequence, etc. In the absence of other mechanisms, one usually inserts
+statements in the program at various carefully chosen points, that prints
+values of significant variables or parameters, or some message that
+indicates the flow of control (or function call sequence). When such a
+modified version of the program is run, the information output by the extra
+statements gives clue to the errors.
+
+<p>
+Using <i>print</i> statements for debugging a program is often not adequate
+or convenient. For example, the programmer may want to change the values of
+certain variables (or parameters) after observing the execution of the
+program till some point. For a large program it may be difficult to go back
+to the source program, make the necessary changes (maybe temporarily) and
+rerun the program. Again, if such <i>print </i> statements are placed inside
+loops, it will produce output everytime the loop is executed though the
+programmer may be interested in only certain iterations of the loop. To
+overcome several such drawbacks of debugging by inserting extra statements in
+the program, there are a kind of tool called <i> debugger </i> that helps in
+debugging programs by giving the programmer some control over the execution
+of the program and some means of examining and modifying different program
+variables during runtime.
+
+</p><h3> Basic Operations Supported by a Debugger </h3>
+
+A debugger provides an interactive interface to the programmer to control the
+execution of the program and observe the proceedings. The program (executable
+file) to be debugged is provided as an input to the debugger. The basic
+operations supported by a debugger are -
+
+<ol>
+<li><i>Breakpoints</i> - Setting breakpoints at various positions in the
+program. The breakpoints are points in the program at which the programmer
+wishes to suspend normal execution of the program and perform other tasks.
+
+</li><li>Examining values of different memory locations - When the execution of a
+program is suspended, the contents of specified memory locations can be
+examined. This includes local variables (usually on the stack), function
+parameters, and global (extern) variables.
+
+</li><li>Examining the contents of the program stack - The contents of the program
+stack reveals information related to the function call sequence that is
+active at that moment.
+
+</li><li>Depositing values in different memory locations - While the execution of
+the debugged program is not underway (yet to start or suspended at a
+breakpoint), the programmer can deposit any value in the memory locations
+corresponding to the program variables, parameters to subroutines, and
+processor registers. 
+
+</li><li>Testing assertions - The programmer may specify relations involving
+program values, that must hold at certain positions in the program during
+execution. eg., after an assignment of the form <i>a = b - c</i> , <i>b</i>
+must be larger than <i>a</i> (provided <i>c</i> is positive).
+
+</li><li>Detecting conditions - Suspend execution of the program whenever any user
+defined condition involving the program variables and/or parameters is met.
+</li></ol>
+
+<h3> Use of Source Program Symbols </h3>
+
+Most debuggers allow the user to refer to the program information in terms of
+symbols of source program, viz., variable names, subroutine names, parameter
+names, field names of composite data structures (records), source program
+line numbers (for specifying breakpoints), etc. Since an executable program
+usually do not contain the mappings from source program symbols to target
+program addresses, hence to be useful to a debugger, the compiler must
+include such mappings in the executable program as additional information
+(say <i>debugger information)</i>.  Most compilers support some
+invocation-option for this purpose (eg. in Unix/Linux, the <i>cc</i> option
+<i>-g</i>). Format of this information created by a compiler must be
+understandable by a debugger.
+
+<h3> Principle of Operation </h3>
+
+The principle of operation of a debugger can be understood by considering a
+simple view - from the <i>specially compiled</i> executable program the
+debugger reads the debugger information into its own data structures. The
+interactive features of the debugger is in the form of a module (that can be
+invoked as a function call or through a <i>software interrupt</i>). The
+interactive interface is invoked by the debugger once at the beginning. The
+user can specify breakpoints through the interface and then tell the debugger
+to start execution of the program to be debugged. The program will continue
+till the first breakpoint is encountered. At that point the control is
+transfered to the interactive interface. The programmer can carry out various
+kinds of operations that are supported in that interface.
+
+<h4> Setting of <i>breakpoints</i> </h4>
+To make the user program stop at specified points, the debugger inserts
+certain statement at those points that would transfer control to the
+interactive interface module. These statements might be in the form of
+function call instruction or software interrupt instruction. Usually in
+programs compiled specifically for debugging, the compiler inserts <i> NOP
+</i> instructions after the translation of each statement of the source
+program. So the debugger can simply replace a NOP instruction by the function
+call or interrupt instruction. In some cases where NOP instructions are not
+there, the debugger replaces valid instructions of the program to insert its
+own function call (or interrupt) instruction, but takes care to have the
+original instructions executed whenever execution proceeds through that
+point.
+
+
+
+</body></html>

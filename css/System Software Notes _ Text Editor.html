@@ -1,0 +1,231 @@
+
+<!-- saved from url=(0057)http://www.tezu.ernet.in/~utpal/course_mat/ss_editor.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title> System Software Notes : Text Editor </title>
+<style type="text/css"></style></head>
+
+<body cz-shortcut-listen="true">
+<h2> Text Editor </h2>
+
+<h3> Introduction </h3>
+
+A <i>text editor</i> is a tool that allows a user to create and revise
+<i>documents</i> in a computer. Though this task can be carried out in other
+modes, the word text editor commonly refers to the tool that does this
+interactively. Earlier computer documents used to be primarily plain text
+documents, but nowadays due to improved input-output mechanisms and file
+formats, a document frequently contains pictures along with texts whose
+appearance (script, size, colour and style) can be varied within the
+document. Apart from producing output of such wide variety, text editors
+today provide many advanced features of interactiveness and output.
+
+<h3> Types of Text Editors </h3>
+
+Depending on how editing is performed, and the type of output that can be
+generated, editors can be broadly classified as -
+
+<ol>
+<li> Line Editors - During original creation lines of text are recognised and
+delimited by end-of-line markers, and during subsequent revision, the line
+must be explicitly specified by line number or by some pattern context. eg.
+edlin editor in early MS-DOS systems.
+
+</li><li> Stream Editors - The idea here is similar to line editor, but the entire
+text is treated as a single stream of characters. Hence the location for
+revision cannot be specified using line numbers. Locations for revision are
+either specified by explicit positioning or by using pattern context. eg. sed
+in Unix/Linux.
+<p> Line editors and stream editors are suitable for text-only documents.
+
+</p></li><li> Screen Editors - These allow the document to be viewed and operated upon
+as a two dimensional plane, of which a portion may be displayed at a time.
+Any portion may be specified for display and location for revision can be
+specified anywhere within the displayed portion. eg. vi, emacs, etc.
+
+</li><li> Word Processors - Provides additional features to basic screen editors.
+Usually support non-textual contents and choice of fonts, style, etc.
+
+</li><li> Structure Editors - These are editors for specific types of documents,
+so that the editor recognises the structure/syntax of the document being
+prepared and helps in maintaining that structure/syntax.
+</li></ol>
+
+<h3> Salient Aspects of Text Editor </h3>
+
+A text editor has to cover the following main aspects related to document
+creation, storage and revision -
+
+    <ol>
+    <li> Interactive user interface </li>
+    <li> Appropriate format for storing the document in file in secondary
+    storage </li>
+    <li> Efficient transfer of information between the user interface and the
+    file in secondary storage. </li>
+    </ol>
+
+<h4> Interactive user interface </h4>
+An important consideration of a document is its layout to a human reader. For
+this it is essential to present a document in a rectangular form, on the
+monitor screen (terminal) or via a printer (as an output of the interactive
+process). Further since a document can potentially be very large and since in
+a computer terminal can display only a limited size of a document at a time,
+hence it is necessary for a text editor to display only a portion
+(<i>page</i>) of a large document that cannot be displayed in entireity at
+once.
+
+<p>
+The process of creating and revising a document in a computer is called
+<i>editing</i>. For interactive editing a text editor displays a document on
+the terminal and accepts various types of input from the user through
+different types of input devices, viz., keyboard, mouse, data-tablet (flat,
+rectangular, elctromagnetically sensitive panel over which a
+ball-point-pen-like stylus is moved and the coordinates of the stylus is sent
+to the system).
+
+</p><p>
+Initially the text editor may display the starting portion of the document.
+During editing the user may give inputs to bring other portions to the
+display. Besides the displayed page, there is the notion of a point within
+the page, indicated by an easily distinguishable symbol called the
+<i>cursor</i>, where the next insertion, deletion or modification will be
+effective. An editor provides various mechanisms (left-right-up-down keys,
+page-up, page-down keys, mouse pointer, commands, etc.) for the
+cursor to be moved throughout the document. If the user requires it to be
+moved outside of the displayed page, the editor displays the new portion that
+would contain the cursor. Many editors also allows the user to <i>select</i>
+(and deselect) portions of the document whose attributes can be modified as a
+whole (like change of font, delete, etc.)
+
+</p><p>
+The most basic action by a user in creating or revising a document is to type
+in the text through the keyboard and, possibly, delete already typed
+portions. Most text editors support many other features in order to reduce
+the work of the user as well as to produce a higher quality documents.
+Commonly found features include <i>cut-paste, pattern-search (and
+substitute), font-change, working with multiple documents at the same time,
+etc.</i>
+
+</p><p>
+Many text editors allows pictures and other non-text information to be
+included in a document. Such editors provide mechanisms to either
+create/modify such information or embed such objects inside the document.
+
+</p><p>
+The output of an editing process, i.e., the document, can be either
+<i>saved</i> as <i>file(s)</i> in the secondary storage or sent to some
+destination in the network, such as a printer or some remote host.
+
+
+</p><h4> Appropriate format for storing the document in file in secondary
+storage </h4>
+The most natural way to visualise a document is as a planar layout of the
+information, within some bounded space. Thus, one possible format to
+<i>save</i> (store) the document in secondary storage is to save the
+<i>attributes</i> of each visible point (pixel) by traversing the layout in
+some order, say, left-to-right lines from top to bottom. However, this is not
+the done for obvious reasons. For textual information, there are widely used
+<i>code-sets</i> (eg., ASCII, EBCDIC, ISCII, Unicode, etc.) that are used to
+encode the information. These code sets also contain codes for white spaces
+and <i>new-line</i>, and hence most textual information can be conveniently
+represented preserving the desired layout.
+
+<p>
+Many text editors allow the appearance (script, size, colour and style) of
+text to be specified by the user. From the point of view of storing such
+variations of appearance of text, this is usually achieved by storing extra
+information describing the appearance along with the actual text. Thus in
+secondary storage, the file corresponding to a document contains the textual
+information as well as attributes of the text, sometimes called <i>meta
+data</i>, that controls the appearance of the text in output medium.
+Similarly, if the document has to contain non-textual information, that too
+is embedded using suitable meta data.
+
+</p><h4> Efficient transfer of information between the user interface and the
+file in secondary storage. </h4>
+
+The user interface of a text editor has to give emphasis to the visual
+appearance of the portion of the document that is displayed at any time, and
+convenience of the user to perform editing operations and viewing the
+document. On the other hand the format in which the document is stored in the
+secondary storage basically provides an unambiguous, static, and non-visual
+model of the document. Thus the text editor has to convert the user input
+into the file format, and file format into the display format. This
+conversion is one of the basic requirements for the text editor design.
+
+<h3> Structure of Text Editor </h3>
+
+The structure of a text editor depends largely on the types of editing
+features and displaying capabilities that are to be supported. To implement
+the diplaying capabilities, the semantics of the meta data that may be
+present in the document file needs to be implemented as display actions. For
+example, if the meta data implies a particular colour to be used for a
+segment of text, editor should invoke methods to effect that colour for the
+particular segment of text. Since at a time only a finite portion of the
+document can be displayed, such actions are to be taken for a portion of the
+information in the file. However, the user may specify some other portion to
+be displayed (through page-up, page-down, pattern search, etc.), in which
+case the display actions must be performed for that portion. Thus the editor
+program should keep track of the size of the display window, and the
+boundaries of the current displayed portion in terms of offsets from some
+fixed point in the document (such as line number of the first and the last
+displayed lines, etc.)
+
+<p>
+It is not enough to directly produce the display of a document page from the
+information in the file. The user provides different editing inputs which
+implies changes in the displayed information as well as the document file.
+For this, firstly, the editor should keep track of the cursor position with
+respect to the displayed information. Then, one possible way to effect the
+changes is to update the document file for each insertion, deletion or
+modification input, and then redraw the page on the monitor according to the
+changed content. But this is a very inefficient method. Instead, text editors
+maintain a <i>memory image</i> of the document, and pages are displayed from
+this memory image rather than from the document file. In fact, when a
+document is being created, a corresponding file in the secondary storage may
+not exist at all. All updations in the document due to editing inputs from
+the user are effected in the memory image maintained in suitable
+<i>buffers</i>.
+
+</p><p>
+The <i>choice of data structure</i> for the memory image (buffers) is
+important, since it has to support <i>efficient insertion and deletion</i>,
+while allowing the size of the document to vary from small to very large. A
+simple 2-dimensional array wih each row containing a line of text, may not
+suit for obvious reasons (what are the reasons ?). A linked list may
+facilitate easy insertion and deletion, but having each letter in a single
+node in the linked list may be wasteful of memory. Also, user commands such
+as page-up, page-down, etc., may become inefficient. Thus some kind of
+combination of array and linked list may have to be used. For example, the
+entries of an array may point to individual buffers for each line of the
+document. The buffer for a line may either be arrays or linked lists (with,
+say, a word in each node). For very large documents it may not be a good idea
+to hold the entire document in such buffers since only a small portion is
+displayed at a time and editing operations for a reasonable duration are
+likely to be in the neighbourhood of the displayed portion. In such
+situations, a text editor may load only the required portion of the document
+into memory buffers, but be able to load any other portion as and when
+required.  It needs to be remembered that in the memory image too it is
+essential to represent the meta data corresponding to the different portions
+of the document.
+
+</p><p>
+By making use of the hardware features of the display terminals, it is
+possible to avoid redrawing the entire screen for each editing input from the
+user. For example, when a character is inserted in a line, only the portion
+to the right of that position needs to be shifted. Similarly, when a line is
+inserted or deleted, only the lines below that line are to be shifted. The
+terminals provide easy alternatives for such actions. Moreover, modern
+terminals provide more advanced buffering mechanisms such that the software
+may only have to update the <i>display buffers</i>. Since the hardware
+features vary from one product to another, there are certain software
+standards and conversion libraries (for each kind of terminal) using which
+the editor program may behave in hardware independent way (See <i>termcap</i>
+and <i>terminfo</i> man pages in Unix/Linux).
+
+</p><h3> Comparision of the features of <i>vi</i> and <i>MS-Word</i> </h3>
+<i>Exercise</i> - Compare the interactive features of <i>vi</i> and
+<i>MS-Word</i> editors.
+
+
+
+</body></html>
